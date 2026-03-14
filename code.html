@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Game Center Lobby</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1f3b61",
+                        "primary-hover": "#2a4c7a",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#0f1114",
+                        "card-dark": "#181b20",
+                        "accent-blue": "#38bdf8",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                    backgroundImage: {
+                        'tech-grid': "radial-gradient(circle at center, rgba(31, 59, 97, 0.15) 0%, transparent 70%), linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)",
+                    },
+                    backgroundSize: {
+                        'tech-grid': '100% 100%, 40px 40px, 40px 40px',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(24, 27, 32, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Subtle scanline animation */
+        @keyframes scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+        .scanlines::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased min-h-screen flex flex-col selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Background Effects -->
+<div class="fixed inset-0 z-0 bg-tech-grid pointer-events-none opacity-40"></div>
+<div class="fixed top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-primary/20 to-transparent pointer-events-none z-0 blur-3xl"></div>
+<!-- Main Wrapper -->
+<div class="relative z-10 flex flex-col min-h-screen w-full">
+<!-- Header -->
+<header class="sticky top-0 z-50 glass-panel border-b border-white/5">
+<div class="container mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-[20px]">stadia_controller</span>
+</div>
+<h1 class="text-white text-lg font-bold tracking-tight">hello's <span class="text-slate-400 font-normal">Game Center</span></h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Lobby</a>
+<a class="text-slate-400 text-sm font-medium hover:text-white transition-colors" href="#">Leaderboard</a>
+<a class="text-slate-400 text-sm font-medium hover:text-white transition-colors" href="#">Community</a>
+</nav>
+<div class="flex items-center gap-3">
+<div class="hidden sm:flex items-center px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-xs text-slate-300">
+<span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+                        Server Online
+                    </div>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-300 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-300 transition-colors md:hidden">
+<span class="material-symbols-outlined text-[20px]">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-4 lg:px-8 py-8 flex flex-col gap-10">
+<!-- Hero Section -->
+<section class="relative w-full rounded-2xl overflow-hidden bg-card-dark border border-white/5 shadow-2xl shadow-black/20 group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 opacity-60" data-alt="Futuristic retro gaming setup with neon lights" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQlUJPiHAYtYXkM5LgXdJqP1dzu8itb5RQ4LKRTH1s9MegDHmYPQpPFiHxmbV_8jHwzumoAtynrJPeu_rhyXfGF6BSe9pdk-GAoov_XscQH4inygKoMO0NNC1yNERWip7WM9BBecuxLyIT_duzGlpMSqOUt6r8If_ma_gGa-Awf6jI2wldDS1QRLqgZokpIcUB_cMVxYd1xgSfJ66MGTZ2euzlMQx0wTCRoWXA02b4aRhYmrFG0viJbdPwjO4FrNtwCCKx0e0C-M_u');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-background-dark via-background-dark/80 to-transparent"></div>
+<div class="relative z-10 flex flex-col justify-center items-start p-8 md:p-12 lg:p-16 min-h-[360px] max-w-2xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/30 border border-primary/40 text-blue-200 text-xs font-bold mb-6 backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px]">stars</span>
+                        FEATURED
+                    </div>
+<h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight tracking-tight">
+                        放松游戏
+                    </h2>
+<p class="text-slate-300 text-lg mb-8 font-light max-w-lg">
+                        Unwind with our curated collection of casual games. Experience the perfect balance of relaxation and challenge.
+                    </p>
+<button class="group flex items-center gap-3 bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-lg font-bold transition-all transform hover:translate-y-[-2px] shadow-lg shadow-primary/20">
+<span>Explore Library</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Game Grid Header -->
+<div class="flex items-end justify-between border-b border-white/10 pb-4">
+<div>
+<h3 class="text-2xl font-bold text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">grid_view</span>
+                        All Games
+                    </h3>
+<p class="text-slate-400 text-sm mt-1">Select a game to start playing</p>
+</div>
+<div class="flex gap-2">
+<button aria-label="Grid View" class="p-2 rounded hover:bg-white/5 text-white bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</button>
+<button aria-label="List View" class="p-2 rounded hover:bg-white/5 text-slate-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">view_list</span>
+</button>
+</div>
+</div>
+<!-- Games Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Snake Game Card -->
+<article class="group relative flex flex-col bg-card-dark rounded-xl overflow-hidden border border-white/5 hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(31,59,97,0.3)]">
+<!-- Image Area -->
+<div class="relative aspect-video overflow-hidden bg-slate-800">
+<div class="absolute top-3 right-3 z-20 bg-black/60 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-bold text-white border border-white/10">
+                            ARCADE
+                        </div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Abstract green neon snake game pattern" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCK1MdEoaDtF1Wqh_IJUb-FPj9yVqeXLaZwgJrCnRS2yOzMpBZvrL5Zu81Ls6rWZe38mxX9XZSw7UOXuILzNLtn6ppMhJG-NakIbUZxJ93pCkgbfUYN93T8N5wmswTSZjbigdxCdSAJEs2osfOzNWwpqi4l1FZ1lfQ-8EOG3UWeL6m85Hhge_iu1YjNuv6kgTI7aFCNGPq-pRMcNlZMhL_I3x1NC4Wl6-Z4G_Mg0-u2vP4jMoObAr7YYZdQn5DS7zCfVDV_wDhZpfsX');">
+</div>
+<!-- Play Overlay -->
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+<div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
+<span class="material-symbols-outlined text-[28px]">play_arrow</span>
+</div>
+</div>
+</div>
+<!-- Content Area -->
+<div class="flex flex-col flex-grow p-5">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-xl font-bold text-white group-hover:text-primary transition-colors">贪吃蛇</h4>
+<div class="flex text-amber-400 text-xs">
+<span class="material-symbols-outlined text-[14px] fill-current">star</span>
+<span class="ml-1 font-medium">4.8</span>
+</div>
+</div>
+<p class="text-slate-400 text-sm mb-5 line-clamp-2 leading-relaxed">
+                            使用电脑玩贪吃蛇. Relive the classic Nokia era experience with modern graphics.
+                        </p>
+<div class="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+<span class="text-xs text-slate-500 font-mono">VER 1.0.2</span>
+<button class="bg-primary/10 hover:bg-primary text-primary hover:text-white px-4 py-1.5 rounded text-sm font-bold transition-all duration-200 border border-primary/20 hover:border-primary">
+                                开始
+                            </button>
+</div>
+</div>
+</article>
+<!-- Placeholder Card 1 (Coming Soon) -->
+<article class="group relative flex flex-col bg-card-dark/50 rounded-xl overflow-hidden border border-white/5 hover:border-white/10 transition-all duration-300 opacity-70 hover:opacity-100">
+<div class="relative aspect-video overflow-hidden bg-slate-900 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-700 text-[48px]">extension</span>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-3 left-3 px-2 py-1 rounded bg-white/10 text-[10px] font-bold text-slate-300 backdrop-blur-sm">
+                            PUZZLE
+                        </div>
+</div>
+<div class="flex flex-col flex-grow p-5">
+<h4 class="text-xl font-bold text-slate-300 mb-2">Tetris Block</h4>
+<p class="text-slate-500 text-sm mb-5">Coming soon. Stack blocks and clear lines in this timeless puzzle.</p>
+<div class="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+<span class="text-xs text-slate-600 font-mono">DEV BUILD</span>
+<button class="bg-white/5 text-slate-400 px-4 py-1.5 rounded text-sm font-medium cursor-not-allowed border border-white/5" disabled="">
+                                Locked
+                            </button>
+</div>
+</div>
+</article>
+<!-- Placeholder Card 2 (Coming Soon) -->
+<article class="group relative flex flex-col bg-card-dark/50 rounded-xl overflow-hidden border border-white/5 hover:border-white/10 transition-all duration-300 opacity-70 hover:opacity-100">
+<div class="relative aspect-video overflow-hidden bg-slate-900 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-700 text-[48px]">rocket_launch</span>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-3 left-3 px-2 py-1 rounded bg-white/10 text-[10px] font-bold text-slate-300 backdrop-blur-sm">
+                            ACTION
+                        </div>
+</div>
+<div class="flex flex-col flex-grow p-5">
+<h4 class="text-xl font-bold text-slate-300 mb-2">Space Invaders</h4>
+<p class="text-slate-500 text-sm mb-5">Defend the earth from pixelated aliens. High score challenge.</p>
+<div class="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+<span class="text-xs text-slate-600 font-mono">BETA</span>
+<button class="bg-white/5 text-slate-400 px-4 py-1.5 rounded text-sm font-medium cursor-not-allowed border border-white/5" disabled="">
+                                Locked
+                            </button>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- Footer -->
+<footer class="border-t border-white/5 bg-background-dark/50 backdrop-blur-sm mt-12">
+<div class="container mx-auto px-4 lg:px-8 py-8">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col items-center md:items-start gap-2">
+<div class="flex items-center gap-2 text-slate-500">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+<span class="text-sm font-mono">SYSTEM_READY</span>
+</div>
+<p class="text-slate-600 text-sm">© 2023 hello's Game Center. All rights reserved.</p>
+</div>
+<div class="flex items-center gap-6">
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-primary hover:text-white text-slate-400 transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">code</span>
+</a>
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-primary hover:text-white text-slate-400 transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+</a>
+</div>
+<div class="text-right">
+<p class="text-slate-500 text-sm">Designed by</p>
+<p class="text-white font-bold tracking-wide">Ethan</p>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</body></html>
